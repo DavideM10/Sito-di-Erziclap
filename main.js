@@ -3,27 +3,24 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const loginContainer = document.getElementById('login-container');
     const content = document.getElementById('content');
     const button = document.getElementById('colorButton');
-    const title = document.querySelector('h1');
-    const pythonButton = document.getElementById('pythonButton');
+    const chatButton = document.getElementById('chatButton');
+    const chatContainer = document.getElementById('chat-container');
+    const chatForm = document.getElementById('chat-form');
+    const chatMessages = document.getElementById('chat-messages');
+    let username = '';
 
     loginForm.addEventListener('submit', (event) => {
         event.preventDefault();
-        const username = document.getElementById('username').value;
+        const inputUsername = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
         // Controllo delle credenziali per due utenti
-        if (username === 'admin' && password === 'Admin@1234') {
+        if ((inputUsername === 'admin' && password === 'Admin@1234') || 
+            (inputUsername === 'user' && password === 'password')) {
+            username = inputUsername;
             loginContainer.style.display = 'none';
             content.style.display = 'block';
-            document.body.style.backgroundColor = 'white'; // Cambia lo sfondo in bianco per admin
-            document.body.style.backgroundImage = 'none'; // Rimuovi l'immagine di sfondo
-            button.style.display = 'none'; // Nascondi il pulsante per cambiare colore
-            title.style.display = 'none'; // Nascondi il titolo
-            pythonButton.style.display = 'block'; // Mostra il pulsante per eseguire il codice Python
-        } else if (username === 'user' && password === 'password') {
-            loginContainer.style.display = 'none';
-            content.style.display = 'block';
-            document.body.style.backgroundColor = 'black'; // Cambia lo sfondo in nero per user
+            document.body.style.backgroundColor = 'black'; // Cambia lo sfondo in nero
             document.body.style.backgroundImage = 'none'; // Rimuovi l'immagine di sfondo
         } else {
             alert('Credenziali non valide');
@@ -33,20 +30,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
     button.addEventListener('click', () => {
         const newColor = getRandomColor();
         document.body.style.backgroundColor = newColor;
-        adjustTextColor(newColor, title);
     });
 
-    pythonButton.addEventListener('click', () => {
-        fetch('/run-python', {
-            method: 'POST',
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert('Codice Python eseguito con successo!');
-        })
-        .catch(error => {
-            console.error('Errore durante l\'esecuzione del codice Python:', error);
-        });
+    chatButton.addEventListener('click', () => {
+        const name = prompt('Inserisci il tuo nome:');
+        if (name) {
+            username = name;
+            chatContainer.style.display = 'block';
+        }
+    });
+
+    chatForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const messageInput = document.getElementById('message');
+        const message = messageInput.value;
+        if (message) {
+            const chatMessage = document.createElement('div');
+            chatMessage.textContent = `${username}: ${message}`;
+            chatMessages.appendChild(chatMessage);
+            messageInput.value = '';
+        }
     });
 });
 
@@ -57,12 +60,4 @@ function getRandomColor() {
         color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
-}
-
-function adjustTextColor(bgColor, element) {
-    const r = parseInt(bgColor.slice(1, 3), 16);
-    const g = parseInt(bgColor.slice(3, 5), 16);
-    const b = parseInt(bgColor.slice(5, 7), 16);
-    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-    element.style.color = brightness > 125 ? 'black' : 'white';
 }

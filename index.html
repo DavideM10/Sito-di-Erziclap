@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,8 +23,15 @@
     </div>
     <div id="content" style="display: none;">
         <h1>Benvenuto da Erziclap!!</h1>
-        <button id="colorButton">Per ora puoi solo: cambia il colore dello sfondo</button>
-        <button id="pythonButton" style="display: none;">Esegui codice Python</button>
+        <button id="colorButton">Cambia il colore dello sfondo</button>
+        <button id="chatButton">Partecipa alla conversazione!</button>
+        <div id="chat-container" style="display: none;">
+            <div id="chat-messages" style="height: 200px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-top: 10px;"></div>
+            <form id="chat-form">
+                <input type="text" id="message" placeholder="Scrivi un messaggio..." required>
+                <button type="submit">Invia</button>
+            </form>
+        </div>
     </div>
     <script src="main.js"></script>
 </body>

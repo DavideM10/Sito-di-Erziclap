@@ -10,10 +10,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
-        // Semplice controllo delle credenziali (puoi sostituirlo con un controllo più sicuro)
-        if (username === 'admin' && password === 'password') {
+        // Controllo delle credenziali per due utenti
+        if ((username === 'admin' && password === 'admin123') || 
+            (username === 'user' && password === 'password')) {
             loginContainer.style.display = 'none';
             content.style.display = 'block';
+            document.body.style.backgroundColor = 'black'; // Cambia lo sfondo in nero
         } else {
             alert('Credenziali non valide');
         }

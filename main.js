@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             loginContainer.style.display = 'none';
             content.style.display = 'block';
             document.body.style.backgroundColor = 'black'; // Cambia lo sfondo in nero
+            document.body.style.backgroundImage = 'none'; // Rimuovi l'immagine di sfondo
         } else {
             showAlert('Credenziali non valide');
         }

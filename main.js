@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const chatMessages = document.getElementById('chat-messages');
     const clearChatButton = document.getElementById('clearChatButton');
     let username = '';
+    let messages = [];
 
     loginForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -41,6 +42,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (name) {
             username = name;
             chatContainer.style.display = 'block';
+            updateChat();
         }
     });
 
@@ -49,18 +51,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const messageInput = document.getElementById('message');
         const message = messageInput.value;
         if (message) {
-            const chatMessage = document.createElement('div');
-            chatMessage.className = 'chat-message';
-            chatMessage.innerHTML = `<strong>${username}:</strong> ${message}`;
-            chatMessages.appendChild(chatMessage);
-            chatMessages.scrollTop = chatMessages.scrollHeight; // Scorri automaticamente verso il basso
+            messages.push({ username, message });
+            updateChat();
             messageInput.value = '';
         }
     });
 
     clearChatButton.addEventListener('click', () => {
-        chatMessages.innerHTML = '';
+        messages = [];
+        updateChat();
     });
+
+    function updateChat() {
+        chatMessages.innerHTML = '';
+        messages.forEach(msg => {
+            const chatMessage = document.createElement('div');
+            chatMessage.className = 'chat-message';
+            chatMessage.innerHTML = `<strong>${msg.username}:</strong> ${msg.message}`;
+            chatMessages.appendChild(chatMessage);
+        });
+        chatMessages.scrollTop = chatMessages.scrollHeight; // Scorri automaticamente verso il basso
+    }
 });
 
 function getRandomColor() {

@@ -2,7 +2,7 @@
   "name": "sito-ericlap",
   "version": "1.0.0",
   "description": "Prova sito",
-  "main": "src/index.html",
+  "main": "index.html",
   "scripts": {
     "start": "live-server src",
     "build": "echo 'Build step not defined'",

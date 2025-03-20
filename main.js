@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             content.style.display = 'block';
             document.body.style.backgroundColor = 'black'; // Cambia lo sfondo in nero
         } else {
-            alert('Credenziali non valide');
+            showAlert('Credenziali non valide');
         }
     });
 
@@ -43,4 +43,14 @@ function adjustTextColor(bgColor, element) {
     const b = parseInt(bgColor.slice(5, 7), 16);
     const brightness = (r * 299 + g * 587 + b * 114) / 1000;
     element.style.color = brightness > 125 ? 'black' : 'white';
+}
+
+function showAlert(message) {
+    const alertBox = document.createElement('div');
+    alertBox.className = 'alert';
+    alertBox.textContent = message;
+    document.body.appendChild(alertBox);
+    setTimeout(() => {
+        alertBox.remove();
+    }, 3000);
 }

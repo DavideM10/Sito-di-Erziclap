@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const chatMessages = document.getElementById('chat-messages');
     const clearChatButton = document.getElementById('clearChatButton');
     let username = '';
-    let messages = [];
 
     loginForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -17,16 +16,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const password = document.getElementById('password').value;
 
         // Controllo delle credenziali per due utenti
-        if ((inputUsername === 'admin' && password === 'Admin@1234') || 
-            (inputUsername === 'user' && password === 'password')) {
+        if (inputUsername === 'admin' && password === 'Admin@1234') {
+            username = 'Miotti';
+            loginContainer.style.display = 'none';
+            content.style.display = 'block';
+            document.body.style.backgroundColor = 'white'; // Cambia lo sfondo in bianco per admin
+            document.body.style.backgroundImage = 'none'; // Rimuovi l'immagine di sfondo
+            clearChatButton.style.display = 'block'; // Mostra il pulsante per ripulire la chat solo per admin
+        } else if (inputUsername === 'user' && password === 'password') {
             username = inputUsername;
             loginContainer.style.display = 'none';
             content.style.display = 'block';
-            document.body.style.backgroundColor = 'black'; // Cambia lo sfondo in nero
+            document.body.style.backgroundColor = 'black'; // Cambia lo sfondo in nero per user
             document.body.style.backgroundImage = 'none'; // Rimuovi l'immagine di sfondo
-            if (username === 'admin') {
-                clearChatButton.style.display = 'block'; // Mostra il pulsante per ripulire la chat solo per admin
-            }
         } else {
             alert('Credenziali non valide');
         }
@@ -42,7 +44,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (name) {
             username = name;
             chatContainer.style.display = 'block';
-            updateChat();
+            loadMessages();
         }
     });
 
@@ -51,26 +53,56 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const messageInput = document.getElementById('message');
         const message = messageInput.value;
         if (message) {
-            messages.push({ username, message });
-            updateChat();
+            const chatMessage = { username, message };
+            saveMessage(chatMessage);
             messageInput.value = '';
         }
     });
 
     clearChatButton.addEventListener('click', () => {
-        messages = [];
-        updateChat();
+        clearMessages();
     });
 
-    function updateChat() {
-        chatMessages.innerHTML = '';
-        messages.forEach(msg => {
-            const chatMessage = document.createElement('div');
-            chatMessage.className = 'chat-message';
-            chatMessage.innerHTML = `<strong>${msg.username}:</strong> ${msg.message}`;
-            chatMessages.appendChild(chatMessage);
-        });
-        chatMessages.scrollTop = chatMessages.scrollHeight; // Scorri automaticamente verso il basso
+    function loadMessages() {
+        fetch('messages.json')
+            .then(response => response.json())
+            .then(messages => {
+                chatMessages.innerHTML = '';
+                messages.forEach(msg => {
+                    const chatMessage = document.createElement('div');
+                    chatMessage.className = 'chat-message';
+                    chatMessage.innerHTML = `<strong>${msg.username}:</strong> ${msg.message}`;
+                    chatMessages.appendChild(chatMessage);
+                });
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Scorri automaticamente verso il basso
+            });
+    }
+
+    function saveMessage(message) {
+        fetch('messages.json')
+            .then(response => response.json())
+            .then(messages => {
+                messages.push(message);
+                fetch('save_messages.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(messages)
+                })
+                .then(() => loadMessages());
+            });
+    }
+
+    function clearMessages() {
+        fetch('save_messages.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify([])
+        })
+        .then(() => loadMessages());
     }
 });
 

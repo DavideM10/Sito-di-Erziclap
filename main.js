@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const content = document.getElementById('content');
     const button = document.getElementById('colorButton');
     const title = document.querySelector('h1');
+    const pythonButton = document.getElementById('pythonButton');
 
     loginForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -11,11 +12,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const password = document.getElementById('password').value;
 
         // Controllo delle credenziali per due utenti
-        if ((username === 'admin' && password === 'admin123') || 
-            (username === 'user' && password === 'password')) {
+        if (username === 'admin' && password === 'Admin@1234') {
             loginContainer.style.display = 'none';
             content.style.display = 'block';
-            document.body.style.backgroundColor = 'black'; // Cambia lo sfondo in nero
+            document.body.style.backgroundColor = 'white'; // Cambia lo sfondo in bianco per admin
+            button.style.display = 'none'; // Nascondi il pulsante per cambiare colore
+            title.style.display = 'none'; // Nascondi il titolo
+            pythonButton.style.display = 'block'; // Mostra il pulsante per eseguire il codice Python
+        } else if (username === 'user' && password === 'password') {
+            loginContainer.style.display = 'none';
+            content.style.display = 'block';
+            document.body.style.backgroundColor = 'black'; // Cambia lo sfondo in nero per user
         } else {
             alert('Credenziali non valide');
         }
@@ -25,6 +32,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const newColor = getRandomColor();
         document.body.style.backgroundColor = newColor;
         adjustTextColor(newColor, title);
+    });
+
+    pythonButton.addEventListener('click', () => {
+        // Esegui il codice Python qui
+        alert('Esecuzione del codice Python...');
+        // Puoi aggiungere qui il codice per chiamare un endpoint backend che esegue il codice Python
     });
 });
 

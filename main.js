@@ -35,9 +35,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     pythonButton.addEventListener('click', () => {
-        // Esegui il codice Python qui
-        alert('Esecuzione del codice Python...');
-        // Puoi aggiungere qui il codice per chiamare un endpoint backend che esegue il codice Python
+        fetch('/run-python', {
+            method: 'POST',
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Codice Python eseguito con successo!');
+        })
+        .catch(error => {
+            console.error('Errore durante l\'esecuzione del codice Python:', error);
+        });
     });
 });
 

@@ -2,7 +2,8 @@ body {
     font-family: 'Arial', sans-serif;
     text-align: center;
     margin-top: 50px;
-    background-color: black; /* Imposta lo sfondo nero di default */
+    background: url('stars.jpg') no-repeat center center fixed; /* Ripristina il cielo stellato */
+    background-size: cover;
     color: white;
 }
 

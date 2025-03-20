@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             loginContainer.style.display = 'none';
             content.style.display = 'block';
             document.body.style.backgroundColor = 'white'; // Cambia lo sfondo in bianco per admin
+            document.body.style.backgroundImage = 'none'; // Rimuovi l'immagine di sfondo
             button.style.display = 'none'; // Nascondi il pulsante per cambiare colore
             title.style.display = 'none'; // Nascondi il titolo
             pythonButton.style.display = 'block'; // Mostra il pulsante per eseguire il codice Python
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             loginContainer.style.display = 'none';
             content.style.display = 'block';
             document.body.style.backgroundColor = 'black'; // Cambia lo sfondo in nero per user
+            document.body.style.backgroundImage = 'none'; // Rimuovi l'immagine di sfondo
         } else {
             alert('Credenziali non valide');
         }

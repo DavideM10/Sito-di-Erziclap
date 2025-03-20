@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const chatContainer = document.getElementById('chat-container');
     const chatForm = document.getElementById('chat-form');
     const chatMessages = document.getElementById('chat-messages');
+    const clearChatButton = document.getElementById('clearChatButton');
     let username = '';
 
     loginForm.addEventListener('submit', (event) => {
@@ -22,6 +23,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
             content.style.display = 'block';
             document.body.style.backgroundColor = 'black'; // Cambia lo sfondo in nero
             document.body.style.backgroundImage = 'none'; // Rimuovi l'immagine di sfondo
+            if (username === 'admin') {
+                clearChatButton.style.display = 'block'; // Mostra il pulsante per ripulire la chat solo per admin
+            }
         } else {
             alert('Credenziali non valide');
         }
@@ -46,10 +50,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const message = messageInput.value;
         if (message) {
             const chatMessage = document.createElement('div');
-            chatMessage.textContent = `${username}: ${message}`;
+            chatMessage.className = 'chat-message';
+            chatMessage.innerHTML = `<strong>${username}:</strong> ${message}`;
             chatMessages.appendChild(chatMessage);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scorri automaticamente verso il basso
             messageInput.value = '';
         }
+    });
+
+    clearChatButton.addEventListener('click', () => {
+        chatMessages.innerHTML = '';
     });
 });
 

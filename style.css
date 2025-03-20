@@ -72,12 +72,24 @@ button:hover {
     margin-top: 20px;
 }
 
-#chat-messages {
-    height: 200px;
+.chat-messages {
+    height: 300px;
     overflow-y: scroll;
     border: 1px solid #ccc;
     padding: 10px;
     margin-top: 10px;
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+}
+
+.chat-message {
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+    color: black;
+    text-align: left;
 }
 
 #chat-form {
@@ -106,4 +118,22 @@ button:hover {
 
 #chat-form button:hover {
     background-color: #45a049;
+}
+
+#clearChatButton {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background-color: #f44336;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#clearChatButton:hover {
+    background-color: #e53935;
 }
